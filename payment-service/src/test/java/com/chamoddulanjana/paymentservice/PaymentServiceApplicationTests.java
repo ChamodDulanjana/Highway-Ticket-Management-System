@@ -1,10 +1,10 @@
-package com.chamoddulanjana.apigateway;
+package com.chamoddulanjana.paymentservice;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ApiGatewayApplicationTests {
+class PaymentServiceApplicationTests {
 
     @Test
     void contextLoads() {

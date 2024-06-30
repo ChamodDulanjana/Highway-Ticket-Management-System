@@ -1,10 +1,10 @@
-package com.chamoddulanjana.apigateway;
+package com.chamoddulanjana.vehicalservice;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ApiGatewayApplicationTests {
+class VehicalServiceApplicationTests {
 
     @Test
     void contextLoads() {
