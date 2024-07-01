@@ -36,6 +36,7 @@ public class VehicleServiceImpl implements VehicleService {
                 .id(vehicleDto.getId())
                 .brand(vehicleDto.getBrand())
                 .model(vehicleDto.getModel())
+                .vehicleNumber(vehicleDto.getVehicleNumber())
                 .color(vehicleDto.getColor())
                 .seatCapacity(vehicleDto.getSeatCapacity())
                 .ownerName(vehicleDto.getOwnerName())
@@ -46,9 +47,9 @@ public class VehicleServiceImpl implements VehicleService {
     }
 
     @Override
-    public VehicleDTO getVehicleById(String id) {
-        LOGGER.info("Get vehicle by id requested: {}", id);
-        return vehicleRepository.findById(id).map(vehicle -> VehicleDTO.
+    public VehicleDTO getVehicleById(String vehicleNumber) {
+        LOGGER.info("Get vehicle by vehicleNumber requested: {}", vehicleNumber);
+        return vehicleRepository.findVehicleByVehicleNumber(vehicleNumber.toLowerCase()).map(vehicle -> VehicleDTO.
                builder()
                 .id(vehicle.getId())
                 .brand(vehicle.getBrand())
@@ -85,15 +86,20 @@ public class VehicleServiceImpl implements VehicleService {
     }
 
     @Override
-    public void updateVehicle(VehicleDTO vehicleDto, String id) {
-        Vehicle vehicle = vehicleRepository.findById(id).orElseThrow(() -> new NotFoundException("Vehicle not found"));
-        vehicle.setBrand(vehicleDto.getBrand());
-        vehicle.setModel(vehicleDto.getModel());
-        vehicle.setColor(vehicleDto.getColor());
-        vehicle.setSeatCapacity(vehicleDto.getSeatCapacity());
-        vehicle.setOwnerName(vehicleDto.getOwnerName());
-        vehicle.setOwnerEmail(vehicleDto.getOwnerEmail());
-        vehicleRepository.save(vehicle);
-        LOGGER.info("Vehicle updated: {}", vehicleDto.getVehicleNumber());
+    public void updateVehicle(VehicleDTO vehicleDto, String vehicleNumber) {
+        if (vehicleRepository.findVehicleByVehicleNumber(vehicleNumber.toLowerCase()).isPresent()) {
+            Vehicle vehicle = vehicleRepository.findVehicleByVehicleNumber(vehicleNumber).get();
+            vehicle.setBrand(vehicleDto.getBrand());
+            vehicle.setModel(vehicleDto.getModel());
+            vehicle.setColor(vehicleDto.getColor());
+            vehicle.setSeatCapacity(vehicleDto.getSeatCapacity());
+            vehicle.setOwnerName(vehicleDto.getOwnerName());
+            vehicle.setOwnerEmail(vehicleDto.getOwnerEmail());
+            vehicleRepository.save(vehicle);
+            LOGGER.info("Vehicle updated: {}", vehicleDto.getVehicleNumber());
+        }else {
+            LOGGER.info("Vehicle not found: {}", vehicleNumber);
+            throw new NotFoundException("Vehicle not found");
+        }
     }
 }
