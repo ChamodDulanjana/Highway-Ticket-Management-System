@@ -26,6 +26,9 @@ public class Vehicle implements Serializable {
     @Column(length = 50, nullable = false)
     private String model;
 
+    @Column(length = 10, nullable = false, unique = true)
+    private String vehicleNumber;
+
     @Column(length = 20, nullable = false)
     private String color;
 

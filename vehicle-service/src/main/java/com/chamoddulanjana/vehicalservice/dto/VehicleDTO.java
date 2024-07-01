@@ -25,6 +25,10 @@ public class VehicleDTO implements Serializable {
     @Length(min = 3, max = 50, message = "Model must be between 3 and 50 characters")
     private String model;
 
+    @NotEmpty(message = "Vehicle number is required")
+    @Length(min = 3, max = 10, message = "Vehicle number must be between 3 and 10 characters")
+    private String vehicleNumber;
+
     @NotEmpty(message = "Color is required")
     @Length(min = 3, max = 20, message = "Color must be between 3 and 20 characters")
     private String color;
