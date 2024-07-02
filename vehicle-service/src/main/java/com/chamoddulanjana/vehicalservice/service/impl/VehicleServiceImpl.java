@@ -6,6 +6,7 @@ import com.chamoddulanjana.vehicalservice.exceptions.customExceptions.AlreadyExi
 import com.chamoddulanjana.vehicalservice.exceptions.customExceptions.NotFoundException;
 import com.chamoddulanjana.vehicalservice.repository.VehicleRepository;
 import com.chamoddulanjana.vehicalservice.service.VehicleService;
+import com.chamoddulanjana.vehicalservice.util.GenerateId;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,9 +32,11 @@ public class VehicleServiceImpl implements VehicleService {
             throw new AlreadyExistException("Vehicle already exist");
         });
 
+        String id = GenerateId.getId("VEH").toLowerCase();
+
         Vehicle vehicleEntity = Vehicle.
                 builder()
-                .id(vehicleDto.getId())
+                .id(id)
                 .brand(vehicleDto.getBrand())
                 .model(vehicleDto.getModel())
                 .vehicleNumber(vehicleDto.getVehicleNumber())
