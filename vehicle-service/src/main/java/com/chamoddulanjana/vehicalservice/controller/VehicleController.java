@@ -4,6 +4,8 @@ import com.chamoddulanjana.vehicalservice.dto.VehicleDTO;
 import com.chamoddulanjana.vehicalservice.entity.Vehicle;
 import com.chamoddulanjana.vehicalservice.service.VehicleService;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,6 +16,7 @@ import java.util.List;
 public class VehicleController {
 
     private final VehicleService vehicleService;
+    private final Logger LOGGER = LoggerFactory.getLogger(VehicleController.class);
 
     @GetMapping("/health")
     public String healthCheck(){

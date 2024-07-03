@@ -1,8 +1,6 @@
 package com.chamoddulanjana.vehicalservice.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -27,7 +25,7 @@ public class Vehicle implements Serializable {
     private String model;
 
     @Column(length = 10, nullable = false, unique = true)
-    private String vehicleNumber;
+    private String licencePlateNumber;
 
     @Column(length = 20, nullable = false)
     private String color;
@@ -35,10 +33,8 @@ public class Vehicle implements Serializable {
     @Column(nullable = false)
     private int seatCapacity;
 
-    @Column(length = 100, nullable = false)
-    private String ownerName;
-
-    @Column(nullable = false, length = 50)
-    private String ownerEmail;
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH, CascadeType.REFRESH}, fetch = FetchType.EAGER)
+    @JoinColumn(name = "owner_id")
+    private Owner owner;
 
 }
