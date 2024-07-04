@@ -22,7 +22,7 @@ public class UserController {
 
     @PostMapping
     public void registerUser(@RequestBody UserDTO user){
-        LOGGER.info("Registering user request: {}", user.getEmail());
+        LOGGER.info("Registering user request: {}", user);
         userService.save(user);
     }
 

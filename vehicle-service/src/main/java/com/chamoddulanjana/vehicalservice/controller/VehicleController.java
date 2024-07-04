@@ -25,21 +25,25 @@ public class VehicleController {
 
     @PostMapping
     public void registerVehicle(@RequestBody VehicleDTO vehicle){
+        LOGGER.info("Registering vehicle request: {}", vehicle);
         vehicleService.registerVehicle(vehicle);
     }
 
     @PutMapping
     public void updateVehicle(@RequestBody VehicleDTO vehicle, @RequestParam String id){
+        LOGGER.info("Updating vehicle request: {}", vehicle.getLicencePlateNumber());
         vehicleService.updateVehicle(vehicle, id);
     }
 
-    @GetMapping("/{id}")
-    public VehicleDTO getVehicleById(@PathVariable String id){
-        return vehicleService.getVehicleById(id);
+    @GetMapping("/{licencePlateNumber}")
+    public VehicleDTO getVehicleById(@PathVariable String licencePlateNumber){
+        LOGGER.info("Retrieving vehicle request: {}", licencePlateNumber);
+        return vehicleService.getVehicleById(licencePlateNumber);
     }
 
     @GetMapping("/getAll")
     public List<VehicleDTO> getAllVehicles(){
+        LOGGER.info("Retrieving all vehicles request");
         return vehicleService.getAllVehicles();
     }
 }
