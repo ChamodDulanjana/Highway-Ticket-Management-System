@@ -15,7 +15,7 @@ import java.io.Serializable;
 @Entity
 public class Vehicle implements Serializable {
     @Id
-    @Column(length = 20)
+    @Column(length = 30)
     private String id;
 
     @Column(length = 30, nullable = false)

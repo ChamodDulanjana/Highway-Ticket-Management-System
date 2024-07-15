@@ -1,5 +1,6 @@
 package com.chamoddulanjana.userservice.dto;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -15,9 +16,7 @@ import java.util.List;
 @Data
 @Builder
 public class OwnerDTO {
-    @NotEmpty(message = "id is required")
-    @NotNull(message = "id is required")
-    @Length(min = 3, max = 30, message = "id must be between 3 and 30 characters")
+
     private String id;
 
     @NotEmpty(message = "name is required")
@@ -43,6 +42,7 @@ public class OwnerDTO {
     @NotEmpty(message = "Email is required")
     @NotNull(message = "Email is required")
     @Length(min = 3, max = 30, message = "Email must be between 3 and 30 characters")
+    @Email
     private String email;
 
 

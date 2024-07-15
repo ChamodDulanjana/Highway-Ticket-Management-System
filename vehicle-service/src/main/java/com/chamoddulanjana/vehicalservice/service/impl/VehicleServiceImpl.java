@@ -96,8 +96,6 @@ public class VehicleServiceImpl implements VehicleService {
     @Override
     public void updateVehicle(VehicleDTO vehicleDto, String licencePlateNumber) {
 
-        vehicleRepository.findVehicleByLicencePlateNumber(licencePlateNumber.toLowerCase()).orElseThrow(() -> new NotFoundException("Vehicle not found"));
-
         OwnerDTO ownerDTO = restTemplate.getForObject("http://localhost:8080/api/v1/owner/" + vehicleDto.getOwnerId(), OwnerDTO.class);
         if (ownerDTO == null) {
             throw new NotFoundException("Owner not found");

@@ -12,6 +12,8 @@ import org.hibernate.validator.constraints.Length;
 @Builder
 public class UserDTO {
 
+    private String id;
+
     @Email
     @NotNull(message = "Email is required")
     @NotEmpty(message = "Email is required")

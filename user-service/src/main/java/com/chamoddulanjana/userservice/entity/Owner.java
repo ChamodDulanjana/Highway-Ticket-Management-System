@@ -32,6 +32,4 @@ public class Owner {
     @Column(nullable = false, length = 100, unique = true)
     private String email;
 
-    //@OneToMany(mappedBy = "owner",cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH}, fetch = FetchType.EAGER)
-    //private List<Vehicle> vehicles;
 }
