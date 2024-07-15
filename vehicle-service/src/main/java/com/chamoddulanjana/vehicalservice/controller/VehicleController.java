@@ -1,7 +1,6 @@
 package com.chamoddulanjana.vehicalservice.controller;
 
 import com.chamoddulanjana.vehicalservice.dto.VehicleDTO;
-import com.chamoddulanjana.vehicalservice.entity.Vehicle;
 import com.chamoddulanjana.vehicalservice.service.VehicleService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -36,9 +35,9 @@ public class VehicleController {
     }
 
     @GetMapping("/{licencePlateNumber}")
-    public VehicleDTO getVehicleById(@PathVariable String licencePlateNumber){
+    public VehicleDTO getVehicleByLicencePlateNumber(@PathVariable String licencePlateNumber){
         LOGGER.info("Retrieving vehicle request: {}", licencePlateNumber);
-        return vehicleService.getVehicleById(licencePlateNumber);
+        return vehicleService.getVehicleByLicencePlateNumber(licencePlateNumber);
     }
 
     @GetMapping("/getAll")
