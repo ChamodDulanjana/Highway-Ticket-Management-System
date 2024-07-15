@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface VehicleService {
     void registerVehicle(VehicleDTO vehicle);
-    VehicleDTO getVehicleById(String vehicleNumber);
+    VehicleDTO getVehicleByLicencePlateNumber(String licencePlateNumber);
     List<VehicleDTO> getAllVehicles();
     void updateVehicle(VehicleDTO vehicle, String vehicleNumber);
 }

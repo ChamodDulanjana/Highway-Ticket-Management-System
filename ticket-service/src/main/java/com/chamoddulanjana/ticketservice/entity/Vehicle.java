@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -33,5 +34,7 @@ public class Vehicle implements Serializable {
     @Column(nullable = false)
     private int seatCapacity;
 
+    @OneToMany
+    private List<Ticket> ticketList;
 
 }

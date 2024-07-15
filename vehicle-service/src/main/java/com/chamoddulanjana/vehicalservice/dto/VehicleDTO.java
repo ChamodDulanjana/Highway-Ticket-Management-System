@@ -42,6 +42,6 @@ public class VehicleDTO implements Serializable {
     @NotNull(message = "Seat capacity is required")
     private int  seatCapacity;
 
-    private OwnerDTO ownerDTO;
+    private String  ownerId;
 
 }

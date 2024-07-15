@@ -45,5 +45,4 @@ public class OwnerDTO {
     @Length(min = 3, max = 30, message = "Email must be between 3 and 30 characters")
     private String email;
 
-    List<VehicleDTO> vehicleDTOList;
 }

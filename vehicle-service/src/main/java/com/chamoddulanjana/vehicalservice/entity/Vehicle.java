@@ -33,8 +33,7 @@ public class Vehicle implements Serializable {
     @Column(nullable = false)
     private int seatCapacity;
 
-    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH, CascadeType.REFRESH}, fetch = FetchType.EAGER)
-    @JoinColumn(name = "owner_id")
-    private Owner owner;
+    @Column(nullable = false, length = 20)
+    private String ownerId;
 
 }
