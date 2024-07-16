@@ -30,9 +30,11 @@ public class VehicleServiceImpl implements VehicleService {
     @Override
     public void registerVehicle(VehicleDTO vehicleDto) {
 
-        OwnerDTO ownerDTO = restTemplate.getForObject("http://localhost:8080/api/v1/user/owner/" + vehicleDto.getOwnerId(), OwnerDTO.class);
-        if (ownerDTO == null) {
-            throw new NotFoundException("Owner not found");
+        try {
+            restTemplate.getForObject("http://localhost:8080/api/v1/user/owner/id/" + vehicleDto.getOwnerId(), OwnerDTO.class, OwnerDTO.class);
+        }catch (Exception exception){
+            LOGGER.error(exception.getMessage());
+            throw new NotFoundException(exception.getMessage());
         }
 
         vehicleRepository.findVehicleByLicencePlateNumber(vehicleDto.getLicencePlateNumber().toLowerCase()).ifPresent(vehicle -> {
@@ -96,9 +98,11 @@ public class VehicleServiceImpl implements VehicleService {
     @Override
     public void updateVehicle(VehicleDTO vehicleDto, String licencePlateNumber) {
 
-        OwnerDTO ownerDTO = restTemplate.getForObject("http://localhost:8080/api/v1/user/owner/" + vehicleDto.getOwnerId(), OwnerDTO.class);
-        if (ownerDTO == null) {
-            throw new NotFoundException("Owner not found");
+        try {
+            restTemplate.getForObject("http://localhost:8080/api/v1/user/owner/id/" + vehicleDto.getOwnerId(), OwnerDTO.class, OwnerDTO.class);
+        }catch (Exception exception){
+            LOGGER.error(exception.getMessage());
+            throw new NotFoundException("Owner not found:{}"+vehicleDto.getOwnerId());
         }
 
         if (vehicleRepository.findVehicleByLicencePlateNumber(licencePlateNumber.toLowerCase()).isPresent()) {

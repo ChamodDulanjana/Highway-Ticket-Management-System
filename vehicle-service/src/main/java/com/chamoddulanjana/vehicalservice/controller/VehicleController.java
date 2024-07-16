@@ -29,9 +29,9 @@ public class VehicleController {
     }
 
     @PutMapping
-    public void updateVehicle(@RequestBody VehicleDTO vehicle, @RequestParam String id){
-        LOGGER.info("Updating vehicle request: {}", vehicle.getLicencePlateNumber());
-        vehicleService.updateVehicle(vehicle, id);
+    public void updateVehicle(@RequestBody VehicleDTO vehicle, @RequestParam String licencePlateNumber){
+        LOGGER.info("Updating vehicle request: {}", licencePlateNumber);
+        vehicleService.updateVehicle(vehicle, licencePlateNumber);
     }
 
     @GetMapping("/{licencePlateNumber}")
