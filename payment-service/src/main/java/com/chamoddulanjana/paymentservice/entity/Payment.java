@@ -1,5 +1,7 @@
 package com.chamoddulanjana.paymentservice.entity;
 
+import com.chamoddulanjana.paymentservice.entity.enums.PaymentMethod;
+import com.chamoddulanjana.paymentservice.entity.enums.PaymentStatus;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
@@ -19,5 +21,8 @@ public class Payment {
     private String id;
     public LocalDateTime dateTime;
     private double amount;
+    private PaymentStatus paymentStatus;
+    private PaymentMethod paymentMethod;
     private String ticketNumber;
+    private String vehicleLicensePlateNumber;
 }
