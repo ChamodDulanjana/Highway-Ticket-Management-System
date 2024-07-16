@@ -9,7 +9,7 @@ spring:
     password: 1234
     url: jdbc:mysql://localhost:3306/highwayTicketManagementSystemPaymentService?createDatabaseIfNotExist=true
     hikari:
-      maximum-pool-size: 5
+      maximum-pool-size: 10
   jpa:
     show-sql: true
     open-in-view: true

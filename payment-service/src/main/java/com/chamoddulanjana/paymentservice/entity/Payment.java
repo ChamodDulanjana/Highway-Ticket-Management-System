@@ -3,6 +3,8 @@ package com.chamoddulanjana.paymentservice.entity;
 import com.chamoddulanjana.paymentservice.entity.enums.PaymentMethod;
 import com.chamoddulanjana.paymentservice.entity.enums.PaymentStatus;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,6 +23,7 @@ public class Payment {
     private String id;
     public LocalDateTime dateTime;
     private double amount;
+    @Enumerated(value = EnumType.STRING)
     private PaymentMethod paymentMethod;
     private String ticketNumber;
 }

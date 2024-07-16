@@ -8,7 +8,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -20,10 +19,10 @@ public class Ticket {
     private String ticketNumber;
 
     @Column(nullable = false, length = 20)
-    private String entrance;
+    private String entranceTerminal;
 
     @Column(nullable = false, length = 20)
-    private String exit;
+    private String exitTerminal;
 
     @Column(nullable = false, length = 20)
     private LocalDateTime date;
@@ -31,7 +30,7 @@ public class Ticket {
     @Column(nullable = false, length = 10)
     private double amount;
 
-    @Enumerated(EnumType.STRING)
+    @Enumerated(value = EnumType.STRING)
     private PaymentStatus paymentStatus;
 
     @Column(nullable = false, length = 20)

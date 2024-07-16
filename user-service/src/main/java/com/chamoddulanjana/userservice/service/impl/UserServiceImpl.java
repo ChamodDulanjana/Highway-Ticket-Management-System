@@ -45,9 +45,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void update(UserDTO userDto, String email) {
+
         if (userRepository.findUserByEmail(email).isPresent()){
             User user = userRepository.findUserByEmail(email).get();
-            user.setPassword(userDto.getPassword());
+            String password = Base64Convertor.convertPassword(userDto.getPassword());
+            user.setPassword(password);
             userRepository.save(user);
             LOGGER.info("The User has been updated: {}", userDto.getEmail());
         }else {

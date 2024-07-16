@@ -30,7 +30,7 @@ public class VehicleServiceImpl implements VehicleService {
     @Override
     public void registerVehicle(VehicleDTO vehicleDto) {
 
-        OwnerDTO ownerDTO = restTemplate.getForObject("http://localhost:8080/api/v1/owner/" + vehicleDto.getOwnerId(), OwnerDTO.class);
+        OwnerDTO ownerDTO = restTemplate.getForObject("http://localhost:8080/api/v1/user/owner/" + vehicleDto.getOwnerId(), OwnerDTO.class);
         if (ownerDTO == null) {
             throw new NotFoundException("Owner not found");
         }
@@ -96,7 +96,7 @@ public class VehicleServiceImpl implements VehicleService {
     @Override
     public void updateVehicle(VehicleDTO vehicleDto, String licencePlateNumber) {
 
-        OwnerDTO ownerDTO = restTemplate.getForObject("http://localhost:8080/api/v1/owner/" + vehicleDto.getOwnerId(), OwnerDTO.class);
+        OwnerDTO ownerDTO = restTemplate.getForObject("http://localhost:8080/api/v1/user/owner/" + vehicleDto.getOwnerId(), OwnerDTO.class);
         if (ownerDTO == null) {
             throw new NotFoundException("Owner not found");
         }
@@ -112,6 +112,29 @@ public class VehicleServiceImpl implements VehicleService {
             LOGGER.info("Vehicle updated: {}", vehicleDto.getLicencePlateNumber());
         }else {
             LOGGER.info("Vehicle not found: {}", licencePlateNumber);
+            throw new NotFoundException("Vehicle not found");
+        }
+    }
+
+    @Override
+    public VehicleDTO getVehicleById(String vehicleId) {
+
+        if (vehicleRepository.findById(vehicleId.toLowerCase()).isPresent()) {
+            Vehicle vehicle = vehicleRepository.findById(vehicleId.toLowerCase()).get();
+            VehicleDTO vehicleDTO = VehicleDTO.
+                    builder()
+                    .id(vehicle.getId())
+                    .brand(vehicle.getBrand())
+                    .model(vehicle.getModel())
+                    .licencePlateNumber(vehicle.getLicencePlateNumber())
+                    .seatCapacity(vehicle.getSeatCapacity())
+                    .color(vehicle.getColor())
+                    .ownerId(vehicle.getOwnerId())
+                    .build();
+            LOGGER.info("Vehicle found by Id: {}", vehicleId);
+            return vehicleDTO;
+        }else {
+            LOGGER.info("Vehicle not found by Id: {}", vehicleId);
             throw new NotFoundException("Vehicle not found");
         }
     }

@@ -17,7 +17,7 @@ public class TicketController {
     private final TicketService ticketService;
     private final Logger LOGGER = LoggerFactory.getLogger(TicketController.class);
 
-    @GetMapping
+    @GetMapping("/health")
     public String healthCheck(){
         return "Ticket Health Check";
     }

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("api/v1/payment")
 public class PaymentController {
 
-    @GetMapping
+    @GetMapping("/health")
     public String healthCheck(){
         return "Payment Health Check";
     }

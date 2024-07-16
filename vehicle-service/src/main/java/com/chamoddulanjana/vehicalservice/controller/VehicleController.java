@@ -36,8 +36,14 @@ public class VehicleController {
 
     @GetMapping("/{licencePlateNumber}")
     public VehicleDTO getVehicleByLicencePlateNumber(@PathVariable String licencePlateNumber){
-        LOGGER.info("Retrieving vehicle request: {}", licencePlateNumber);
+        LOGGER.info("Retrieving vehicle request by Email: {}", licencePlateNumber);
         return vehicleService.getVehicleByLicencePlateNumber(licencePlateNumber);
+    }
+
+    @GetMapping("/id/{id}")
+    public VehicleDTO getVehicleById(@PathVariable String id){
+        LOGGER.info("Retrieving vehicle request by Id: {}", id);
+        return vehicleService.getVehicleById(id);
     }
 
     @GetMapping("/getAll")

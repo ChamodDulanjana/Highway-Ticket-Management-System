@@ -29,7 +29,7 @@ public class TicketServiceImpl implements TicketService {
     @Override
     public void generateTicket(TicketDTO ticketDTO) {
 
-        VehicleDTO vehicleDTO = restTemplate.getForObject("http://localhost:8080/api/v1/vehicle/" + ticketDTO.getVehicleId(), VehicleDTO.class);
+        VehicleDTO vehicleDTO = restTemplate.getForObject("http://localhost:8080/api/v1/vehicle/id/" + ticketDTO.getVehicleId(), VehicleDTO.class, VehicleDTO.class);
         if (vehicleDTO == null) {
             throw new NotFoundException("Vehicle not found");
         }
@@ -38,8 +38,8 @@ public class TicketServiceImpl implements TicketService {
 
         Ticket ticket = Ticket.builder()
                 .ticketNumber(ticketNumber)
-                .entrance(ticketDTO.getEntrance())
-                .exit(ticketDTO.getExit())
+                .entranceTerminal(ticketDTO.getEntranceTerminal())
+                .exitTerminal(ticketDTO.getExitTerminal())
                 .date(LocalDateTime.now())
                 .amount(ticketDTO.getAmount())
                 .paymentStatus(ticketDTO.getPaymentStatus())
@@ -53,14 +53,14 @@ public class TicketServiceImpl implements TicketService {
     @Override
     public void updateTicket(TicketDTO ticketDTO, String ticketNumber) {
 
-        VehicleDTO vehicleDTO = restTemplate.getForObject("http://localhost:8080/api/v1/vehicle/" + ticketDTO.getVehicleId(), VehicleDTO.class);
+        VehicleDTO vehicleDTO = restTemplate.getForObject("http://localhost:8080/api/v1/vehicle/id/" + ticketDTO.getVehicleId(), VehicleDTO.class, VehicleDTO.class);
         if (vehicleDTO == null) {
             throw new NotFoundException("Vehicle not found");
         }
 
         Ticket ticket = ticketRepository.findTicketByTicketNumber(ticketNumber.toLowerCase()).orElseThrow(() -> new NotFoundException("Ticket not found"));
-        ticket.setEntrance(ticketDTO.getEntrance());
-        ticket.setExit(ticketDTO.getExit());
+        ticket.setEntranceTerminal(ticketDTO.getEntranceTerminal());
+        ticket.setExitTerminal(ticketDTO.getExitTerminal());
         ticket.setAmount(ticketDTO.getAmount());
         ticket.setPaymentStatus(ticketDTO.getPaymentStatus());
         ticketRepository.save(ticket);
@@ -73,8 +73,8 @@ public class TicketServiceImpl implements TicketService {
         return ticketRepository.findTicketByTicketNumber(ticketNumber).map(ticket -> TicketDTO.
                 builder()
                 .ticketNumber(ticket.getTicketNumber())
-                .entrance(ticket.getEntrance())
-                .exit(ticket.getExit())
+                .entranceTerminal(ticket.getEntranceTerminal())
+                .exitTerminal(ticket.getExitTerminal())
                 .amount(ticket.getAmount())
                 .paymentStatus(ticket.getPaymentStatus())
                 .vehicleId(ticket.getVehicleId())
@@ -87,8 +87,8 @@ public class TicketServiceImpl implements TicketService {
         return ticketRepository.findAll().stream().map(ticket -> TicketDTO.
                 builder()
                 .ticketNumber(ticket.getTicketNumber())
-                .entrance(ticket.getEntrance())
-                .exit(ticket.getExit())
+                .entranceTerminal(ticket.getEntranceTerminal())
+                .exitTerminal(ticket.getExitTerminal())
                 .amount(ticket.getAmount())
                 .paymentStatus(ticket.getPaymentStatus())
                 .vehicleId(ticket.getVehicleId())

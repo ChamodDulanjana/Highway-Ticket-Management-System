@@ -25,12 +25,12 @@ public class TicketDTO {
     @NotNull(message = "Entrance is required")
     @NotEmpty(message = "Entrance is required")
     @Length(min = 3, max = 20, message = "Entrance must be between 3 and 20 characters")
-    private String entrance;
+    private String entranceTerminal;
 
     @NotNull(message = "Exit is required")
     @NotEmpty(message = "Exit is required")
     @Length(min = 3, max = 20, message = "Exit must be between 3 and 20 characters")
-    private String exit;
+    private String exitTerminal;
 
     @NotNull(message = "Date is required")
     @NotEmpty(message = "Date is required")
