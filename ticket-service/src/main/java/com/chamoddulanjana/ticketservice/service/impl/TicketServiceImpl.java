@@ -29,10 +29,12 @@ public class TicketServiceImpl implements TicketService {
     @Override
     public void generateTicket(TicketDTO ticketDTO) {
 
-        VehicleDTO vehicleDTO = restTemplate.getForObject("http://localhost:8080/api/v1/vehicle/id/" + ticketDTO.getVehicleId(), VehicleDTO.class, VehicleDTO.class);
-        if (vehicleDTO == null) {
-            throw new NotFoundException("Vehicle not found");
+        try {
+            restTemplate.getForObject("http://localhost:8080/api/v1/vehicle/id/" + ticketDTO.getVehicleId(), VehicleDTO.class, VehicleDTO.class);
+        }catch (Exception exception){
+            throw new NotFoundException("Vehicle id " + ticketDTO.getVehicleId() + " not found");
         }
+
 
         String ticketNumber = GenerateId.getId("TIC").toLowerCase();
 
@@ -47,7 +49,7 @@ public class TicketServiceImpl implements TicketService {
                 .build();
 
         ticketRepository.save(ticket);
-        LOGGER.info("Ticket generated successfully:{}", ticketDTO.getTicketNumber());
+        LOGGER.info("Ticket generated successfully:{}", ticket.getTicketNumber());
     }
 
     @Override
