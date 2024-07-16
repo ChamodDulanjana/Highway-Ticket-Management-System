@@ -1,9 +1,7 @@
 package com.chamoddulanjana.ticketservice.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import com.chamoddulanjana.ticketservice.entity.enums.PaymentStatus;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,7 +17,7 @@ import java.util.List;
 @Entity
 public class Ticket {
     @Id
-    private String id;
+    private String ticketNumber;
 
     @Column(nullable = false, length = 20)
     private String entrance;
@@ -31,8 +29,11 @@ public class Ticket {
     private LocalDateTime date;
 
     @Column(nullable = false, length = 10)
-    private String paymentId;
+    private double amount;
 
+    @Enumerated(EnumType.STRING)
+    private PaymentStatus paymentStatus;
 
-    //private List<Vehicle> vehicles;
+    @Column(nullable = false, length = 20)
+    private String vehicleId;
 }

@@ -15,7 +15,7 @@ import java.util.List;
 public class OwnerController {
 
     private final OwnerService ownerService;
-    Logger LOGGER = LoggerFactory.getLogger(OwnerController.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(OwnerController.class);
 
     @GetMapping("/health")
     public String healthCheck(){

@@ -21,7 +21,7 @@ import java.util.List;
 public class OwnerServiceImpl implements OwnerService {
 
     private final OwnerRepository ownerRepository;
-    Logger LOGGER = LoggerFactory.getLogger(OwnerServiceImpl.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(OwnerServiceImpl.class);
 
     @Override
     public void registerOwner(OwnerDTO owner) {

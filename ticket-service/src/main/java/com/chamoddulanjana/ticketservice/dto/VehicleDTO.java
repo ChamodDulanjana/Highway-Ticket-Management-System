@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 
 import java.io.Serializable;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -40,6 +41,4 @@ public class VehicleDTO implements Serializable {
     @NotEmpty(message = "Seat capacity is required")
     @NotNull(message = "Seat capacity is required")
     private int  seatCapacity;
-
-
 }
