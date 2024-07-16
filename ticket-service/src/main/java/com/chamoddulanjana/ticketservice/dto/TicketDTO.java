@@ -13,7 +13,8 @@ import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Data@Builder
+@Data
+@Builder
 public class TicketDTO {
 
     @NotNull(message = "Id is required")
