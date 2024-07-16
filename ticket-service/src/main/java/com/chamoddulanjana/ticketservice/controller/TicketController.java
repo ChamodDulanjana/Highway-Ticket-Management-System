@@ -42,7 +42,7 @@ public class TicketController {
 
     @PutMapping
     public void updateTicket(@RequestBody TicketDTO ticketDTO, @RequestParam String ticketNumber){
-        LOGGER.info("Updating ticket: {}", ticketDTO.getTicketNumber());
+        LOGGER.info("Updating ticket: {}", ticketNumber);
         ticketService.updateTicket(ticketDTO, ticketNumber);
     }
 }

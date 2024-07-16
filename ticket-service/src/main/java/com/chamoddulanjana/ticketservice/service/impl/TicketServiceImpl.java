@@ -32,9 +32,9 @@ public class TicketServiceImpl implements TicketService {
         try {
             restTemplate.getForObject("http://localhost:8080/api/v1/vehicle/id/" + ticketDTO.getVehicleId(), VehicleDTO.class, VehicleDTO.class);
         }catch (Exception exception){
+            LOGGER.error(exception.getMessage());
             throw new NotFoundException("Vehicle id " + ticketDTO.getVehicleId() + " not found");
         }
-
 
         String ticketNumber = GenerateId.getId("TIC").toLowerCase();
 
@@ -55,9 +55,11 @@ public class TicketServiceImpl implements TicketService {
     @Override
     public void updateTicket(TicketDTO ticketDTO, String ticketNumber) {
 
-        VehicleDTO vehicleDTO = restTemplate.getForObject("http://localhost:8080/api/v1/vehicle/id/" + ticketDTO.getVehicleId(), VehicleDTO.class, VehicleDTO.class);
-        if (vehicleDTO == null) {
-            throw new NotFoundException("Vehicle not found");
+        try {
+            restTemplate.getForObject("http://localhost:8080/api/v1/vehicle/id/" + ticketDTO.getVehicleId(), VehicleDTO.class, VehicleDTO.class);
+        }catch (Exception exception){
+            LOGGER.error(exception.getMessage());
+            throw new NotFoundException("Vehicle id " + ticketDTO.getVehicleId() + " not found");
         }
 
         Ticket ticket = ticketRepository.findTicketByTicketNumber(ticketNumber.toLowerCase()).orElseThrow(() -> new NotFoundException("Ticket not found"));
@@ -66,7 +68,7 @@ public class TicketServiceImpl implements TicketService {
         ticket.setAmount(ticketDTO.getAmount());
         ticket.setPaymentStatus(ticketDTO.getPaymentStatus());
         ticketRepository.save(ticket);
-        LOGGER.info("Ticket updated successfully:{}", ticketDTO.getTicketNumber());
+        LOGGER.info("Ticket updated successfully:{}", ticket.getTicketNumber());
     }
 
     @Override
@@ -86,6 +88,7 @@ public class TicketServiceImpl implements TicketService {
 
     @Override
     public List<TicketDTO> getAllTickets() {
+        LOGGER.info("Get all tickets");
         return ticketRepository.findAll().stream().map(ticket -> TicketDTO.
                 builder()
                 .ticketNumber(ticket.getTicketNumber())
