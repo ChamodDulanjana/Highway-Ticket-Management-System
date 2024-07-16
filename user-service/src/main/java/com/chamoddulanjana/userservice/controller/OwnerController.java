@@ -45,4 +45,10 @@ public class OwnerController {
         LOGGER.info("Retrieving all owners request");
         return ownerService.getAllOwners();
     }
+
+    @GetMapping("/id/{id}")
+    public OwnerDTO getOwnerById(@PathVariable String id){
+        LOGGER.info("Retrieving owner by id request: {}", id);
+        return ownerService.getOwnerById(id);
+    }
 }

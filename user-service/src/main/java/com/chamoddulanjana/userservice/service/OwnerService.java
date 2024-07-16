@@ -10,5 +10,6 @@ public interface OwnerService {
     void registerOwner(OwnerDTO owner);
     void updateOwner(OwnerDTO owner, String identityNumber);
     OwnerDTO getOwnerByIdentityNumber(String identityNumber);
+    OwnerDTO getOwnerById(String id);
     List<OwnerDTO> getAllOwners();
 }

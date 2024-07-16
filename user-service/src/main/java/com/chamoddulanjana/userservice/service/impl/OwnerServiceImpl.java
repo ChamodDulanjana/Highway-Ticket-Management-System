@@ -72,6 +72,25 @@ public class OwnerServiceImpl implements OwnerService {
     }
 
     @Override
+    public OwnerDTO getOwnerById(String id) {
+        if (ownerRepository.findById(id).isPresent()){
+            LOGGER.info("Get owner by id: {}", id);
+            Owner owner = ownerRepository.findById(id.toLowerCase()).get();
+            return OwnerDTO.
+                    builder()
+                    .id(owner.getId())
+                    .name(owner.getName())
+                    .address(owner.getAddress())
+                    .email(owner.getEmail())
+                    .phoneNumber(owner.getPhoneNumber())
+                    .identityNumber(owner.getIdentityNumber())
+                    .build();
+        }
+        LOGGER.info("Owner not found: {}", id);
+        throw new NotFoundException("This owner does not exist");
+    }
+
+    @Override
     public List<OwnerDTO> getAllOwners() {
         LOGGER.info("Get all owners");
         return ownerRepository.findAll().stream().map(owner -> OwnerDTO.
