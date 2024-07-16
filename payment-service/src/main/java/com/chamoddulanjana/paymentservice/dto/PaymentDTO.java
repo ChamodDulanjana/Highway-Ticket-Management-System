@@ -35,10 +35,6 @@ public class PaymentDTO {
 
     @NotNull(message = "Id is required")
     @NotEmpty(message = "Id is required")
-    private PaymentStatus paymentStatus;
-
-    @NotNull(message = "Id is required")
-    @NotEmpty(message = "Id is required")
     private PaymentMethod paymentMethod;
 
     @NotNull(message = "Ticket Number is required")
@@ -46,8 +42,4 @@ public class PaymentDTO {
     @Length(min = 3, max = 30, message = "Ticket Number must be between 3 and 30 characters")
     private String ticketNumber;
 
-    @NotNull(message = "Licence Plate Number is required")
-    @NotEmpty(message = "Licence Plate Number is required")
-    @Length(min = 3, max = 10, message = "Licence Plate Number must be between 3 and 10 characters")
-    private String vehicleLicensePlateNumber;
 }

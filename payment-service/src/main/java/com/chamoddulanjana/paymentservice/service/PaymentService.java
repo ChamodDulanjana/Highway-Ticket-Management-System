@@ -8,5 +8,4 @@ public interface PaymentService {
     void generatePayment(PaymentDTO paymentDTO);
     PaymentDTO getPaymentByPaymentId(String paymentId);
     List<PaymentDTO> getAllPayments();
-    void updatePayment(PaymentDTO paymentDTO, String paymentId);
 }

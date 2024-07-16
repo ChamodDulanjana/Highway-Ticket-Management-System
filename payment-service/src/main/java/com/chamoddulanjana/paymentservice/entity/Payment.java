@@ -21,8 +21,6 @@ public class Payment {
     private String id;
     public LocalDateTime dateTime;
     private double amount;
-    private PaymentStatus paymentStatus;
     private PaymentMethod paymentMethod;
     private String ticketNumber;
-    private String vehicleLicensePlateNumber;
 }
