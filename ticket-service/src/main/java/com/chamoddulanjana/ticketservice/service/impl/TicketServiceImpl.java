@@ -7,6 +7,7 @@ import com.chamoddulanjana.ticketservice.exceptions.customExceptions.NotFoundExc
 import com.chamoddulanjana.ticketservice.repository.TicketRepository;
 import com.chamoddulanjana.ticketservice.service.TicketService;
 import com.chamoddulanjana.ticketservice.util.GenerateId;
+import com.chamoddulanjana.ticketservice.util.GenerateTicketNumber;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,6 +25,7 @@ public class TicketServiceImpl implements TicketService {
 
     private final TicketRepository ticketRepository;
     private final RestTemplate restTemplate;
+    private final GenerateTicketNumber generateTicketNumber;
     private final Logger LOGGER = LoggerFactory.getLogger(TicketServiceImpl.class);
 
     @Override
@@ -36,9 +38,11 @@ public class TicketServiceImpl implements TicketService {
             throw new NotFoundException("Vehicle id " + ticketDTO.getVehicleId() + " not found");
         }
 
-        String ticketNumber = GenerateId.getId("TIC").toLowerCase();
+        String id = GenerateId.getId("TIC").toLowerCase();
+        String ticketNumber = generateTicketNumber.generateNextTicketNumber();
 
         Ticket ticket = Ticket.builder()
+                .id(id)
                 .ticketNumber(ticketNumber)
                 .entranceTerminal(ticketDTO.getEntranceTerminal())
                 .exitTerminal(ticketDTO.getExitTerminal())
@@ -63,6 +67,7 @@ public class TicketServiceImpl implements TicketService {
         }
 
         Ticket ticket = ticketRepository.findTicketByTicketNumber(ticketNumber.toLowerCase()).orElseThrow(() -> new NotFoundException("Ticket not found"));
+        ticket.setId(ticketDTO.getId());
         ticket.setEntranceTerminal(ticketDTO.getEntranceTerminal());
         ticket.setExitTerminal(ticketDTO.getExitTerminal());
         ticket.setAmount(ticketDTO.getAmount());
@@ -76,6 +81,7 @@ public class TicketServiceImpl implements TicketService {
         LOGGER.info("Get ticket by ticket number:{}", ticketNumber);
         return ticketRepository.findTicketByTicketNumber(ticketNumber).map(ticket -> TicketDTO.
                 builder()
+                .id(ticket.getId())
                 .ticketNumber(ticket.getTicketNumber())
                 .entranceTerminal(ticket.getEntranceTerminal())
                 .exitTerminal(ticket.getExitTerminal())
@@ -91,6 +97,7 @@ public class TicketServiceImpl implements TicketService {
         LOGGER.info("Get all tickets");
         return ticketRepository.findAll().stream().map(ticket -> TicketDTO.
                 builder()
+                .id(ticket.getId())
                 .ticketNumber(ticket.getTicketNumber())
                 .entranceTerminal(ticket.getEntranceTerminal())
                 .exitTerminal(ticket.getExitTerminal())

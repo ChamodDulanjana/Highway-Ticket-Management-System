@@ -20,6 +20,11 @@ public class TicketDTO {
     @NotNull(message = "Id is required")
     @NotEmpty(message = "Id is required")
     @Length(min = 3, max = 20, message = "Id must be between 3 and 30 characters")
+    private String id;
+
+    @NotNull(message = "Ticket Number is required")
+    @NotEmpty(message = "Ticket Number is required")
+    @Length(max = 20, message = "Ticket Number max can be 20 characters")
     private String ticketNumber;
 
     @NotNull(message = "Entrance is required")

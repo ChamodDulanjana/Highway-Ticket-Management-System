@@ -16,6 +16,9 @@ import java.time.LocalDateTime;
 @Entity
 public class Ticket {
     @Id
+    private String id;
+
+    @Column(nullable = false, length = 20)
     private String ticketNumber;
 
     @Column(nullable = false, length = 20)
