@@ -37,9 +37,9 @@ public class PaymentDTO {
     @NotEmpty(message = "Id is required")
     private PaymentMethod paymentMethod;
 
-    @NotNull(message = "Ticket Number is required")
-    @NotEmpty(message = "Ticket Number is required")
-    @Length(min = 3, max = 30, message = "Ticket Number must be between 3 and 30 characters")
-    private String ticketNumber;
+    @NotNull(message = "Ticket Id is required")
+    @NotEmpty(message = "Ticket Id is required")
+    @Length(min = 3, max = 30, message = "Ticket Id must be between 3 and 30 characters")
+    private String ticketId;
 
 }

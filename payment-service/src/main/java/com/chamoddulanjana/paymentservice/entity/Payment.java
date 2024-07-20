@@ -2,10 +2,7 @@ package com.chamoddulanjana.paymentservice.entity;
 
 import com.chamoddulanjana.paymentservice.entity.enums.PaymentMethod;
 import com.chamoddulanjana.paymentservice.entity.enums.PaymentStatus;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,9 +18,18 @@ import java.time.LocalDateTime;
 public class Payment {
     @Id
     private String id;
+
+    @Column(nullable = false, length = 50)
     public LocalDateTime dateTime;
+
+    @Column(nullable = false, length = 50)
     private double amount;
+
     @Enumerated(value = EnumType.STRING)
+
+    @Column(nullable = false, length = 50)
     private PaymentMethod paymentMethod;
-    private String ticketNumber;
+
+    @Column(nullable = false, length = 50)
+    private String ticketId;
 }

@@ -17,7 +17,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Transactional
@@ -30,14 +32,16 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     public void generatePayment(PaymentDTO paymentDTO) {
-        TicketDTO ticketDTO = restTemplate.getForObject("http://localhost:8080/api/v1/ticket/" + paymentDTO.getTicketNumber(), TicketDTO.class);
-        if (ticketDTO == null) {
-            LOGGER.info("Ticket number {} not found", paymentDTO.getTicketNumber());
+
+        TicketDTO ticketDTO;
+        try {
+             ticketDTO = restTemplate.getForObject("http://localhost:8080/api/v1/ticket/id/" + paymentDTO.getTicketId(), TicketDTO.class, TicketDTO.class);
+        }catch (Exception e){
+            LOGGER.error(e.getMessage());
             throw new NotFoundException("Ticket not found");
         }
-
         if (ticketDTO.getPaymentStatus().toString().equalsIgnoreCase("PAID")){
-            LOGGER.info("Ticket number {} already paid", paymentDTO.getTicketNumber());
+            LOGGER.info("Ticket number {} already paid", paymentDTO.getTicketId());
             throw new AlreadyExistException("This ticket is already paid");
         }else {
 
@@ -47,15 +51,23 @@ public class PaymentServiceImpl implements PaymentService {
                     builder()
                     .id(id)
                     .dateTime(LocalDateTime.now())
-                    .amount(paymentDTO.getAmount())
+                    .amount(ticketDTO.getAmount())
                     .paymentMethod(paymentDTO.getPaymentMethod())
-                    .ticketNumber(paymentDTO.getTicketNumber())
+                    .ticketId(paymentDTO.getTicketId())
                     .build();
             paymentRepository.save(payment);
 
+            Map<String, String> params = new HashMap<>();
+            params.put("id", paymentDTO.getTicketId().toString().toLowerCase());
+
             ticketDTO.setPaymentStatus(PaymentStatus.PAID);
-            restTemplate.put("http://localhost:8080/api/v1/ticket/" + paymentDTO.getTicketNumber(), ticketDTO);
-            LOGGER.info("Ticket number {} paid successfully", paymentDTO.getTicketNumber());
+            try {
+                restTemplate.put("http://localhost:8080/api/v1/ticket/update/" + paymentDTO.getTicketId(), ticketDTO);
+            }catch (Exception e){
+                LOGGER.error(e.getMessage());
+                throw new RuntimeException("Ticket update failed");
+            }
+            LOGGER.info("Ticket number {} paid successfully", paymentDTO.getTicketId());
         }
     }
 
@@ -68,7 +80,7 @@ public class PaymentServiceImpl implements PaymentService {
                 .dateTime(payment.getDateTime())
                 .amount(payment.getAmount())
                 .paymentMethod(payment.getPaymentMethod())
-                .ticketNumber(payment.getTicketNumber())
+                .ticketId(payment.getTicketId())
                 .build()
         ).orElseThrow(() -> new NotFoundException("Payment not found"));
     }
@@ -81,7 +93,7 @@ public class PaymentServiceImpl implements PaymentService {
                 .dateTime(payment.getDateTime())
                 .amount(payment.getAmount())
                 .paymentMethod(payment.getPaymentMethod())
-                .ticketNumber(payment.getTicketNumber())
+                .ticketId(payment.getTicketId())
                 .build()
         ).toList();
     }
