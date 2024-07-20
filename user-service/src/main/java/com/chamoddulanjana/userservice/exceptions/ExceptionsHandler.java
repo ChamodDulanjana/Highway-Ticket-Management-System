@@ -36,7 +36,7 @@ public class ExceptionsHandler {
     @ExceptionHandler(NotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ResponseEntity<ErrorResponseInfo> handleException(NotFoundException exception) {
-        return new ResponseEntity<>(ErrorResponseInfo.builder().status(HttpStatus.INTERNAL_SERVER_ERROR).date(LocalDateTime.now()).message(exception.getMessage()).build(), HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(ErrorResponseInfo.builder().status(HttpStatus.NOT_FOUND).date(LocalDateTime.now()).message(exception.getMessage()).build(), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(AlreadyExistException.class)
