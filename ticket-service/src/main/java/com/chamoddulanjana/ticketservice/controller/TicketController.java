@@ -40,9 +40,15 @@ public class TicketController {
         return ticketService.getAllTickets();
     }
 
-    @PutMapping
-    public void updateTicket(@RequestBody TicketDTO ticketDTO, @RequestParam String ticketNumber){
-        LOGGER.info("Updating ticket: {}", ticketNumber);
-        ticketService.updateTicket(ticketDTO, ticketNumber);
+    @PutMapping("/update/{id}")
+    public void updateTicket(@RequestBody TicketDTO ticketDTO, @PathVariable String id){
+        LOGGER.info("Updating ticket: {}", id);
+        ticketService.updateTicket(ticketDTO, id);
+    }
+
+    @GetMapping("/id/{id}")
+    public TicketDTO getTicketById(@PathVariable String id){
+        LOGGER.info("Getting ticket by id: {}", id);
+        return ticketService.getTicketByTicketId(id);
     }
 }

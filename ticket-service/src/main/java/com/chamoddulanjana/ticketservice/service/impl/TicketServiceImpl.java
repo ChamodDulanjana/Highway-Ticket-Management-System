@@ -57,7 +57,7 @@ public class TicketServiceImpl implements TicketService {
     }
 
     @Override
-    public void updateTicket(TicketDTO ticketDTO, String ticketNumber) {
+    public void updateTicket(TicketDTO ticketDTO, String id) {
 
         try {
             restTemplate.getForObject("http://localhost:8080/api/v1/vehicle/id/" + ticketDTO.getVehicleId(), VehicleDTO.class, VehicleDTO.class);
@@ -66,11 +66,11 @@ public class TicketServiceImpl implements TicketService {
             throw new NotFoundException("Vehicle id " + ticketDTO.getVehicleId() + " not found");
         }
 
-        Ticket ticket = ticketRepository.findTicketByTicketNumber(ticketNumber.toLowerCase()).orElseThrow(() -> new NotFoundException("Ticket not found"));
-        ticket.setId(ticketDTO.getId());
+        Ticket ticket = ticketRepository.findTicketById(id.toLowerCase()).orElseThrow(() -> new NotFoundException("Ticket not found"));
         ticket.setEntranceTerminal(ticketDTO.getEntranceTerminal());
         ticket.setExitTerminal(ticketDTO.getExitTerminal());
         ticket.setAmount(ticketDTO.getAmount());
+        ticket.setDate(ticketDTO.getDate());
         ticket.setPaymentStatus(ticketDTO.getPaymentStatus());
         ticketRepository.save(ticket);
         LOGGER.info("Ticket updated successfully:{}", ticket.getTicketNumber());
@@ -86,6 +86,7 @@ public class TicketServiceImpl implements TicketService {
                 .entranceTerminal(ticket.getEntranceTerminal())
                 .exitTerminal(ticket.getExitTerminal())
                 .amount(ticket.getAmount())
+                .date(ticket.getDate())
                 .paymentStatus(ticket.getPaymentStatus())
                 .vehicleId(ticket.getVehicleId())
                 .build()
@@ -102,9 +103,31 @@ public class TicketServiceImpl implements TicketService {
                 .entranceTerminal(ticket.getEntranceTerminal())
                 .exitTerminal(ticket.getExitTerminal())
                 .amount(ticket.getAmount())
+                .date(ticket.getDate())
                 .paymentStatus(ticket.getPaymentStatus())
                 .vehicleId(ticket.getVehicleId())
                 .build()
         ).toList();
+    }
+
+    @Override
+    public TicketDTO getTicketByTicketId(String ticketId) {
+        LOGGER.info("Get ticket by ticket id:{}", ticketId);
+        if (ticketRepository.findTicketById(ticketId.toLowerCase()).isPresent()) {
+            Ticket ticket =  ticketRepository.findTicketById(ticketId.toLowerCase()).get();
+            return TicketDTO.
+                    builder()
+                    .id(ticket.getId())
+                    .ticketNumber(ticket.getTicketNumber())
+                    .entranceTerminal(ticket.getEntranceTerminal())
+                    .exitTerminal(ticket.getExitTerminal())
+                    .amount(ticket.getAmount())
+                    .date(ticket.getDate())
+                    .paymentStatus(ticket.getPaymentStatus())
+                    .vehicleId(ticket.getVehicleId())
+                    .build();
+        }
+        LOGGER.error("Ticket not found");
+        throw new NotFoundException("Ticket not found");
     }
 }
