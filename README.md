@@ -51,7 +51,7 @@ The system follows a microservice architecture, with the following services:
 ### Installation
 1. **Clone the repository**
     ```bash
-    git clone https://github.com/yourusername/highway-ticket-management-system.git
+    git clone https://github.com/ChamodDulanjana/Highway-Ticket-Management-System.git
     cd highway-ticket-management-system
     ```
 
@@ -76,4 +76,4 @@ The system follows a microservice architecture, with the following services:
 ## Contact
 **Project Maintainer**: [Chamod Dulanjana](mailto:chamodperera128@gmail.com)
 
-**GitHub Repository**: [https://github.com/yourusername/highway-ticket-management-system](https://github.com/yourusername/highway-ticket-management-system)
+**GitHub Repository**: [https://github.com/ChamodDulanjana/Highway-Ticket-Management-System.git](https://github.com/ChamodDulanjana/Highway-Ticket-Management-System.git)
